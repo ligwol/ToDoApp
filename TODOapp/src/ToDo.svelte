@@ -1,11 +1,12 @@
 <script>
-    let tasks = []
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    //let tasks = localStorage.getItem('tasks') || [];
     let newTaskTitle = '';
 
     function addTask(e) {
         e.preventDefault();
         tasks = [
-            ... tasks,
+            ... tasks, // перечисление всех пердыдущих эл-в массива + новый 
             {
                 id: Math.random().toString(36).substr(2,9),
                 title: newTaskTitle,
@@ -13,6 +14,7 @@
             }
         ]
         newTaskTitle = '';
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
     function deleteTask(id) {
@@ -20,6 +22,7 @@
         let index = tmp.findIndex(task => task.id === id);
         tmp.splice(index, 1);
         tasks = tmp;
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
     function completeTask(id){
@@ -27,6 +30,7 @@
         let index = tmp.findIndex(task => task.id === id);
         tmp[index].complete = true;
         tasks = tmp;
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 </script>
 
